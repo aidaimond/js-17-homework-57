@@ -1,21 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import UserForm from "../../components/UserForm/UserForm";
 import Users from "../../components/Users/Users";
 
 function App() {
+
+  const [users, setUsers] = useState<User[]>([]);
+
+  const addUser = (newUser: User) => {
+    setUsers(prev => [...prev, newUser]);
+  };
+
   return (
     <>
       <main className="container-fluid">
         <div className="row mt-2">
-          <div className="col">
-            <UserForm/>
+          <div className="col-3">
+            <UserForm onSubmit={addUser}/>
           </div>
-          <div className="col">
-            <Users/>
+          <div className="col-3">
+            <Users users={users}/>
           </div>
         </div>
       </main>
-
     </>
   );
 }
