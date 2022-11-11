@@ -14,10 +14,10 @@ function App() {
     <>
       <main className="container-fluid">
         <div className="row mt-2">
-          <div className="col-3">
+          <div className="col-4">
             <UserForm onSubmit={addUser}/>
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <Users users={users}/>
           </div>
         </div>

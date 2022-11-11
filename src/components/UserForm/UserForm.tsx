@@ -6,42 +6,53 @@ interface Props {
 
 const UserForm: React.FC<Props> = ({onSubmit}) => {
 
-  const [user, setUser] = useState<UserMutation>({
+  const startState: UserMutation = {
     name: '',
     mail: '',
     active: false,
     role: '',
-  });
+  };
+
+  const [user, setUser] = useState<UserMutation>(startState);
 
   const onUserChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
     setUser(prev => ({...prev, [name]: value}));
   };
 
-  const onFormChange = (e: React.FormEvent) => {
+  const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({
       id: Math.random().toString(),
       ...user,
     })
-    console.log(user);
+    setUser(startState);
+  };
+
+  const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, checked} = e.target;
+    setUser(prev => ({...prev, [name]: checked}));
   };
 
   return (
-    <form onSubmit={onFormChange}>
+    <form onSubmit={onFormChange} className="border border border-2 border-secondary rounded p-4 bg-white ">
       <h4>Create a new user</h4>
       <div className="mb-3">
         <label htmlFor="name">Name</label>
         <input
           id="name" name="name" type="text" className="form-control"
-          value={user.name} onChange={onUserChange}
+          required
+          value={user.name}
+          onChange={onUserChange}
         />
       </div>
       <div className="mb-3">
         <label htmlFor="mail">E-mail</label>
         <input
           id="mail" name="mail" type="email" className="form-control"
-          value={user.mail} onChange={onUserChange}
+          required
+          value={user.mail}
+          onChange={onUserChange}
         />
       </div>
       <div className="mb-3">
@@ -49,9 +60,7 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
         <input
           name="active" type="checkbox" className="ms-2"
           checked={user.active}
-          onChange={(e) => {
-            setUser(prev => ({...prev, active: e.target.checked}));
-          }}
+          onChange={onCheckboxChange}
         />
       </div>
       <div className="mb-3">
@@ -59,7 +68,8 @@ const UserForm: React.FC<Props> = ({onSubmit}) => {
           <select
             name="role"
             required
-            value={user.role} onChange={onUserChange}
+            value={user.role}
+            onChange={onUserChange}
           >
             <option disabled value="">Select a role</option>
             <option>User</option>

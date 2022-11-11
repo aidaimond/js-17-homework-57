@@ -5,18 +5,25 @@ interface Props {
 }
 
 const UserItem: React.FC<Props> = ({user}) => {
+
+  const classNames = ['card mb-2 bg-opacity-50'];
+
+  if (user.active) {
+    classNames.push('bg-success');
+  } else {
+    classNames.push('bg-danger');
+  }
+
   return (
-    <div className="card mb-2">
-      <div className="row no-gutters">
-        <div className="col-sm-8">
+    <div className={classNames.join(' ')}>
+        <div className="col">
           <div className="card-body">
-            <h5 className="card-title">{user.name}</h5>
-            <p className="card-text small">{user.mail}</p>
-            <p className="card-text">{user.active}</p>
-            <p className="card-text">{user.role}</p>
+            <h5 className="card-title">User Name: {user.name}</h5>
+            <p className="card-text">E-mail: {user.mail}</p>
+            <p className="card-text">Role: {user.role}</p>
+            <p className="card-text">Status: {user.active ? 'Online' : 'Offline'}</p>
           </div>
         </div>
-      </div>
     </div>
   );
 };

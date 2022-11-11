@@ -7,12 +7,12 @@ interface Props {
 
 const Users: React.FC<Props> = ({users}) => {
   return (
-    <>
-      <h4>Users</h4>
+    <div className="border border-2 border-secondary bg-white p-4 rounded">
+      <h4 className="text-center">Users</h4>
       {users.map((user) => (
         <UserItem key={user.id} user={user}/>
       ))}
-    </>
+    </div>
   );
 };
 
